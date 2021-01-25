@@ -7,45 +7,86 @@ struct student {
     char firstName[20];
     char lastName[20];
     int number;
-} stu[20];
+}stu;
 
 struct subject {
     char name[20];
     int year;
     int semester;
-} sub[20];
+}sub;
 
 
-void printMainMenu();
-void printStudentsMenu();
-void printSubjectsMenu();
-void insertStudents();
-void insertSubjects();
+void MainMenu();
+void StudentsMenu();
+void SubjectsMenu();
+void insertStudent(FILE * st);
+void insertSubject(FILE * su);
+void editStudent(FILE * st);
+void editSubject(FILE * su);
+void displayStudent(FILE * st);
+void displaySubject(FILE * su);
+FILE delStudent(FILE * st);
+FILE delSubject(FILE * su);
+void searchStudent(FILE * st);
+void searchSubject(FILE * su);
+
 
 int main(){
-    int choice;
-   
-    insertStudents();
-    insertSubjects();
+    
+    MainMenu();
 
     return 0;
 }
 
-void printMainMenu(){
+void MainMenu(){
     
-    printf("**** Welcome to School Management System ****\n\n\n");
-    printf("          MAIN MENU\n");
-    printf("==============================\n");
-    printf("[1] Students Menu\n");
-    printf("[2] Subjects Menu\n");
-    printf("[0] Exit\n");
-    printf("==============================\n");
+    int option;
+    int i;
+
+    while (i == 1)
+    {
+        printf("**** Welcome to School Management System ****\n\n\n");
+        printf("          MAIN MENU\n");
+        printf("==============================\n");
+        printf("[1] Students Menu\n");
+        printf("[2] Subjects Menu\n");
+        printf("[0] Exit\n");
+        printf("==============================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &option);
+
+        switch (option)
+        {
+        case 1:
+            StudentsMenu();
+            i == 1;
+            break;
+        case 2:
+            SubjectsMenu();
+            i == 1;
+            break;
+        case 0:
+            i == 0;
+            break;
+        default:
+            break;
+        }
+    }
 }
 
-void printStudentsMenu(){
+void StudentsMenu(){
     
-    printf("**** Welcome to School Management System ****\n\n\n");
-    printf("        STUDENTS MENU\n");
+    FILE * st;
+    st = (fopen("students.txt","w+"));
+    if(st == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
+
+    int option;
+
+    printf("\n\n        STUDENTS MENU\n");
     printf("==============================\n");
     printf("[1] Add a new Student\n");
     printf("[2] List all Students\n");
@@ -54,12 +95,46 @@ void printStudentsMenu(){
     printf("[5] Delete a Student\n");
     printf("[0] Exit\n");
     printf("==============================\n");
+    printf("Enter your choice: ");
+    scanf("%d", &option);
+
+    switch (option)
+    {
+    case 1:
+        insertStudent(st);
+        break;
+    case 2:
+        displayStudent;
+        break;
+    case 3:
+        searchStudent;
+        break;
+    case 4:
+        editStudent;
+        break;
+    case 5:
+        delStudent;
+        break;
+    case 0:
+        break;
+    default:
+        break;
+    }
 }
 
-void printSubjectsMenu(){
+void SubjectsMenu(){
+
+    FILE * su;
+    su = (fopen("subjects.txt","w+"));
+    if(su == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
     
-    printf("**** Welcome to School Management System ****\n\n\n");
-    printf("        SUBJECTS MENU\n");
+    int option;
+
+    printf("\n\n        SUBJECTS MENU\n");
     printf("==============================\n");
     printf("[1] Add a new Subject\n");
     printf("[2] List all Subject\n");
@@ -68,9 +143,32 @@ void printSubjectsMenu(){
     printf("[5] Delete a Subject\n");
     printf("[0] Exit\n");
     printf("==============================\n");
+    printf("Enter your choice: ");
+    scanf("%d", &option);
+
+    switch (option)
+    {
+    case 1:
+        insertSubject;
+        break;
+    case 2:
+        displaySubject;
+        break;
+    case 3:
+        searchSubject;
+        break;
+    case 4:
+        editSubject;
+        break;
+    case 5:
+        delSubject;
+        break;
+    default:
+        break;
+    }
 }
 
-void insertStudents(){
+void insertStudent(FILE * st){
 
     //number of students to add
     int n;
@@ -80,15 +178,16 @@ void insertStudents(){
     // storing information
     for (int i = 0; i < n; ++i){
         printf("Enter students number: ");
-        scanf("%d", &stu[i].number);
+        scanf("%d", &stu.number);
         printf("Enter first name: ");
-        scanf("%s", &stu[i].firstName);
+        scanf("%s", &stu.firstName);
         printf("Enter last name: ");
-        scanf("%s", &stu[i].lastName);
+        scanf("%s", &stu.lastName);
+        fprintf(st, "\nNumber: %d \nName: %s %s \n", stu.number, stu.firstName, stu.lastName);
     }
 }
 
-void insertSubjects(){
+void insertSubject(FILE * su){
 
     //number of subjects to add
     int n;
@@ -98,11 +197,12 @@ void insertSubjects(){
     //storing information
     for (int i = 0; i < n; i++){
         printf("Enter subjects name: ");
-        scanf("%s", &sub[i].name);
+        scanf("%s", &sub.name);
         printf("Enter subjects year: ");
-        scanf("%d", &sub[i].year);
+        scanf("%d", &sub.year);
         printf("Enter subjects semester: ");
-        scanf("%d", &sub[i].semester);
+        scanf("%d", &sub.semester);
+        fprintf(su, "\nAno: %d \nSemestre: %d \nNome: %s \n", sub.year, sub.semester, sub.name);
     }
 
 }
