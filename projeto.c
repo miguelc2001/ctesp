@@ -79,102 +79,107 @@ void MainMenu(){
 void StudentsMenu(){
     
     FILE * st;
-    st = (fopen("students.txt","w+"));
-    if(st == NULL)
-    {
-        printf("Error!");
-        exit(1);
-    }
 
     int option;
+    int i = 1;
 
-    printf("\n\n\n        STUDENTS MENU\n");
-    printf("==============================\n");
-    printf("[1] Add a new Student\n");
-    printf("[2] List all Students\n");
-    printf("[3] Search for a Student\n");
-    printf("[4] Edit a Student information\n");
-    printf("[5] Delete a Student\n");
-    printf("[0] Exit\n");
-    printf("==============================\n");
-    printf("Enter your choice: ");
-    scanf("%d", &option);
-
-    switch (option)
+    while(i == 1)
     {
-    case 1:
-        insertStudent(st);
-        break;
-    case 2:
-        displayStudent(st);
-        break;
-    case 3:
-        searchStudent(st);
-        break;
-    case 4:
-        editStudent(st);
-        break;
-    case 5:
-        delStudent(st);
-        break;
-    case 0:
-        break;
-    default:
-        break;
-    }
+        printf("\n\n\n        STUDENTS MENU\n");
+        printf("==============================\n");
+        printf("[1] Add a new Student\n");
+        printf("[2] List all Students\n");
+        printf("[3] Search for a Student\n");
+        printf("[4] Edit a Student information\n");
+        printf("[5] Delete a Student\n");
+        printf("[0] Exit\n");
+        printf("==============================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &option);
 
+        switch (option)
+        {
+        case 1:
+            insertStudent(st);
+            break;
+        case 2:
+            displayStudent(st);
+            break;
+        case 3:
+            searchStudent;
+            break;
+        case 4:
+            editStudent;
+            break;
+        case 5:
+            delStudent;
+            break;
+        case 0:
+            i++;
+            break;
+        default:
+            break;
+        }
+    }
     fclose(st);
 }
 
 void SubjectsMenu(){
 
     FILE * su;
-    su = (fopen("subjects.txt","w+"));
-    if(su == NULL)
-    {
-        printf("Error!");
-        exit(1);
-    }
     
     int option;
+    int i = 1;
 
-    printf("\n\n\n        SUBJECTS MENU\n");
-    printf("==============================\n");
-    printf("[1] Add a new Subject\n");
-    printf("[2] List all Subject\n");
-    printf("[3] Search for a Subject\n");
-    printf("[4] Edit a Subject information\n");
-    printf("[5] Delete a Subject\n");
-    printf("[0] Exit\n");
-    printf("==============================\n");
-    printf("Enter your choice: ");
-    scanf("%d", &option);
-
-    switch (option)
+    while(i == 1)
     {
-    case 1:
-        insertSubject(su);
-        break;
-    case 2:
-        displaySubject;
-        break;
-    case 3:
-        searchSubject;
-        break;
-    case 4:
-        editSubject;
-        break;
-    case 5:
-        delSubject;
-        break;
-    default:
-        break;
-    }
+        printf("\n\n\n        SUBJECTS MENU\n");
+        printf("==============================\n");
+        printf("[1] Add a new Subject\n");
+        printf("[2] List all Subject\n");
+        printf("[3] Search for a Subject\n");
+        printf("[4] Edit a Subject information\n");
+        printf("[5] Delete a Subject\n");
+        printf("[0] Exit\n");
+        printf("==============================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &option);
 
+        switch (option)
+        {
+        case 1:
+            insertSubject(su);
+            break;
+        case 2:
+            displaySubject(su);
+            break;
+        case 3:
+            searchSubject;
+            break;
+        case 4:
+            editSubject;
+            break;
+        case 5:
+            delSubject;
+            break;
+        case 0:
+            i++;
+            break;
+        default:
+            break;
+        }
+    }
     fclose(su);
 }
 
 void insertStudent(FILE * st){
+
+    st = (fopen("students.txt","w"));
+    if(st == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
 
     //number of students to add
     int n;
@@ -192,9 +197,18 @@ void insertStudent(FILE * st){
         fprintf(st, "\nNumber: %d \nName: %s %s \n", stu.number, stu.firstName, stu.lastName);
         printf("\n");
     }
+
+    fclose(st);
 }
 
 void insertSubject(FILE * su){
+
+    su = (fopen("subjects.txt","w"));
+    if(su == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
 
     //number of subjects to add
     int n;
@@ -213,9 +227,18 @@ void insertSubject(FILE * su){
         printf("\n");
     }
 
+    fclose(su);
 }
 
 void displayStudent(FILE * st){
+
+    //abre o ficheiro
+    st = (fopen("students.txt","r"));
+    if(st == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
 
     char ch;
 
@@ -224,13 +247,22 @@ void displayStudent(FILE * st){
         ch = fgetc(st);
 
         //faz print do caracter no terminal
-        putchar(ch);
+        printf("%c", ch);
 
     }while(ch != EOF); //repete se o caracter não é o fim do ficheiro
 
+    fclose(st);//fecha o ficheiro
 }
 
 void displaySubject(FILE * su){
+
+    //abre o ficheiro
+    su = (fopen("subjects.txt","r"));
+    if(su == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
 
     char ch;
 
@@ -239,8 +271,9 @@ void displaySubject(FILE * su){
         ch = fgetc(su);
 
         //faz print do caracter no terminal
-        putchar(ch);
+        printf("%c", ch);
 
     }while(ch != EOF); //repete se o caracter não é o fim do ficheiro
 
+    fclose(su);//fecha o ficheiro
 }
