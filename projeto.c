@@ -21,14 +21,14 @@ void StudentsMenu();
 void SubjectsMenu();
 void insertStudent(FILE * st);
 void insertSubject(FILE * su);
-void editStudent(FILE * st);
-void editSubject(FILE * su);
 void displayStudent(FILE * st);
 void displaySubject(FILE * su);
-FILE delStudent(FILE * st);
-FILE delSubject(FILE * su);
 void searchStudent(FILE * st);
 void searchSubject(FILE * su);
+void editStudent(FILE * st);
+void editSubject(FILE * su);
+FILE delStudent(FILE * st);
+FILE delSubject(FILE * su);
 
 
 int main(){
@@ -41,11 +41,11 @@ int main(){
 void MainMenu(){
     
     int option;
-    int i;
+    int i = 1;
 
     while (i == 1)
     {
-        printf("**** Welcome to School Management System ****\n\n\n");
+        printf("**** Welcome to School Management System ****\n\n");
         printf("          MAIN MENU\n");
         printf("==============================\n");
         printf("[1] Students Menu\n");
@@ -59,19 +59,21 @@ void MainMenu(){
         {
         case 1:
             StudentsMenu();
-            i == 1;
+            i = 1;
             break;
         case 2:
             SubjectsMenu();
-            i == 1;
+            i = 1;
             break;
         case 0:
-            i == 0;
+            i++; 
             break;
         default:
             break;
         }
     }
+    
+    
 }
 
 void StudentsMenu(){
@@ -86,7 +88,7 @@ void StudentsMenu(){
 
     int option;
 
-    printf("\n\n        STUDENTS MENU\n");
+    printf("\n\n\n        STUDENTS MENU\n");
     printf("==============================\n");
     printf("[1] Add a new Student\n");
     printf("[2] List all Students\n");
@@ -104,22 +106,24 @@ void StudentsMenu(){
         insertStudent(st);
         break;
     case 2:
-        displayStudent;
+        displayStudent(st);
         break;
     case 3:
-        searchStudent;
+        searchStudent(st);
         break;
     case 4:
-        editStudent;
+        editStudent(st);
         break;
     case 5:
-        delStudent;
+        delStudent(st);
         break;
     case 0:
         break;
     default:
         break;
     }
+
+    fclose(st);
 }
 
 void SubjectsMenu(){
@@ -134,7 +138,7 @@ void SubjectsMenu(){
     
     int option;
 
-    printf("\n\n        SUBJECTS MENU\n");
+    printf("\n\n\n        SUBJECTS MENU\n");
     printf("==============================\n");
     printf("[1] Add a new Subject\n");
     printf("[2] List all Subject\n");
@@ -149,7 +153,7 @@ void SubjectsMenu(){
     switch (option)
     {
     case 1:
-        insertSubject;
+        insertSubject(su);
         break;
     case 2:
         displaySubject;
@@ -166,6 +170,8 @@ void SubjectsMenu(){
     default:
         break;
     }
+
+    fclose(su);
 }
 
 void insertStudent(FILE * st){
@@ -184,6 +190,7 @@ void insertStudent(FILE * st){
         printf("Enter last name: ");
         scanf("%s", &stu.lastName);
         fprintf(st, "\nNumber: %d \nName: %s %s \n", stu.number, stu.firstName, stu.lastName);
+        printf("\n");
     }
 }
 
@@ -203,6 +210,37 @@ void insertSubject(FILE * su){
         printf("Enter subjects semester: ");
         scanf("%d", &sub.semester);
         fprintf(su, "\nAno: %d \nSemestre: %d \nNome: %s \n", sub.year, sub.semester, sub.name);
+        printf("\n");
     }
+
+}
+
+void displayStudent(FILE * st){
+
+    char ch;
+
+    do{
+        //lê um caracter do ficheiro
+        ch = fgetc(st);
+
+        //faz print do caracter no terminal
+        putchar(ch);
+
+    }while(ch != EOF); //repete se o caracter não é o fim do ficheiro
+
+}
+
+void displaySubject(FILE * su){
+
+    char ch;
+
+    do{
+        //lê um caracter do ficheiro
+        ch = fgetc(su);
+
+        //faz print do caracter no terminal
+        putchar(ch);
+
+    }while(ch != EOF); //repete se o caracter não é o fim do ficheiro
 
 }
