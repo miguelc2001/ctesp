@@ -211,7 +211,7 @@ void insertStudent(FILE * st){
         scanf("%s", &stu.firstName);
         printf("Enter last name: ");
         scanf("%s", &stu.lastName);
-        fprintf(st, "%s, %s %s \n", stu.number, stu.firstName, stu.lastName);
+        fprintf(st, "%s, %s %s \n\n", stu.number, stu.firstName, stu.lastName);
         printf("\n");
     }
 
@@ -242,7 +242,7 @@ void insertSubject(FILE * su){
         scanf("%d", &sub.year);
         printf("Enter subjects semester: ");
         scanf("%d", &sub.semester);
-        fprintf(su, "Ano %d, Semestre %d, %s \n", sub.year, sub.semester, sub.name);
+        fprintf(su, "Ano %d, Semestre %d, %s \n\n", sub.year, sub.semester, sub.name);
         printf("\n");
     }
 
@@ -299,9 +299,6 @@ void displaySubject(FILE * su){
 
 void searchStudent(FILE * st){
 
-    Student stu;
-    int flag = 0, siz = sizeof(stu);
-
     //opens file
     st = (fopen("students.txt","r"));
     if(st == NULL)
@@ -312,29 +309,17 @@ void searchStudent(FILE * st){
 
     char line[100];
     char p[20];
-    int found = 0;
 
     printf("Enter search parameter: ");
     scanf("%s", &p);
     
-    rewind(st);
-
-    while((fread(&stu, siz, 1, st)) == 1)
+    while (fgets(line, sizeof(line), st) != NULL)
     {
-        if(stu.number == p)
+        if (strstr(line , p) != NULL)
         {
-            flag = 1;
-            printf("\n%s, %s %s", stu.number, stu.firstName, stu.lastName);
-            continue;
+            printf("%s",line);
         }
-        fwrite(&stu, siz, 1, st);
     }
-
-    if(flag == 0)
-    {
-        printf("\nNo student found with that information.\n");
-    }
-    
     fclose(st);
 }
 
@@ -350,13 +335,17 @@ void searchSubject(FILE * su){
 
     char line[100];
     char p[20];
-    int found = 0;
-
-    printf("Enter search parameter: ");
-    scanf("%s", p);
     
-    fscanf(su, p, line);
-    printf("FOUND: \n%s", line);
+    printf("Enter search parameter: ");
+    scanf("%s", &p);
+    
+    while (fgets(line, sizeof(line), su) != NULL)
+    {
+        if (strstr(line , p) != NULL)
+        {
+            printf("%s",line);
+        }
+    }
     
     fclose(su);
 }
