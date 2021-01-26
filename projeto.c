@@ -1,19 +1,31 @@
+/**
+ * @file projeto.c
+ * @author Miguel Correia
+ * @brief 
+ * @version 0.1
+ * @date 2021-01-26
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 #include <stdlib.h>
 
-struct student {
+#define Student struct Stud
+#define Subject struct Sub
+
+struct Stud {
     char firstName[20];
     char lastName[20];
-    int number;
-}stu;
+    char number[10];
+};
 
-struct subject {
-    char name[20];
+struct Sub {
+    char name[50];
     int year;
     int semester;
-}sub;
+};
 
 
 void MainMenu();
@@ -32,7 +44,10 @@ FILE delSubject(FILE * su);
 
 
 int main(){
-    
+
+    Student stu;
+    Subject sub;
+
     MainMenu();
 
     return 0;
@@ -106,7 +121,7 @@ void StudentsMenu(){
             displayStudent(st);
             break;
         case 3:
-            searchStudent;
+            searchStudent(st);
             break;
         case 4:
             editStudent;
@@ -154,7 +169,7 @@ void SubjectsMenu(){
             displaySubject(su);
             break;
         case 3:
-            searchSubject;
+            searchSubject(su);
             break;
         case 4:
             editSubject;
@@ -174,6 +189,8 @@ void SubjectsMenu(){
 
 void insertStudent(FILE * st){
 
+    Student stu;
+
     st = (fopen("students.txt","w"));
     if(st == NULL)
     {
@@ -189,12 +206,12 @@ void insertStudent(FILE * st){
     // storing information
     for (int i = 0; i < n; ++i){
         printf("Enter students number: ");
-        scanf("%d", &stu.number);
+        scanf("%s", &stu.number);
         printf("Enter first name: ");
         scanf("%s", &stu.firstName);
         printf("Enter last name: ");
         scanf("%s", &stu.lastName);
-        fprintf(st, "\nNumber: %d \nName: %s %s \n", stu.number, stu.firstName, stu.lastName);
+        fprintf(st, "%s, %s %s \n", stu.number, stu.firstName, stu.lastName);
         printf("\n");
     }
 
@@ -202,6 +219,8 @@ void insertStudent(FILE * st){
 }
 
 void insertSubject(FILE * su){
+
+    Subject sub;
 
     su = (fopen("subjects.txt","w"));
     if(su == NULL)
@@ -223,7 +242,7 @@ void insertSubject(FILE * su){
         scanf("%d", &sub.year);
         printf("Enter subjects semester: ");
         scanf("%d", &sub.semester);
-        fprintf(su, "\nAno: %d \nSemestre: %d \nNome: %s \n", sub.year, sub.semester, sub.name);
+        fprintf(su, "Ano %d, Semestre %d, %s \n", sub.year, sub.semester, sub.name);
         printf("\n");
     }
 
@@ -276,4 +295,68 @@ void displaySubject(FILE * su){
     }while(ch != EOF); //repete se o caracter não é o fim do ficheiro
 
     fclose(su);//fecha o ficheiro
+}
+
+void searchStudent(FILE * st){
+
+    Student stu;
+    int flag = 0, siz = sizeof(stu);
+
+    //opens file
+    st = (fopen("students.txt","r"));
+    if(st == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
+
+    char line[100];
+    char p[20];
+    int found = 0;
+
+    printf("Enter search parameter: ");
+    scanf("%s", &p);
+    
+    rewind(st);
+
+    while((fread(&stu, siz, 1, st)) == 1)
+    {
+        if(stu.number == p)
+        {
+            flag = 1;
+            printf("\n%s, %s %s", stu.number, stu.firstName, stu.lastName);
+            continue;
+        }
+        fwrite(&stu, siz, 1, st);
+    }
+
+    if(flag == 0)
+    {
+        printf("\nNo student found with that information.\n");
+    }
+    
+    fclose(st);
+}
+
+void searchSubject(FILE * su){
+
+    //opens file
+    su = (fopen("subjects.txt","r"));
+    if(su == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
+
+    char line[100];
+    char p[20];
+    int found = 0;
+
+    printf("Enter search parameter: ");
+    scanf("%s", p);
+    
+    fscanf(su, p, line);
+    printf("FOUND: \n%s", line);
+    
+    fclose(su);
 }
