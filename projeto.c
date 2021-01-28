@@ -29,7 +29,7 @@ struct Sub {
     int semester;
 };
 
-//funções
+//funções 
 void MainMenu();
 void StudentsMenu();
 void SubjectsMenu();
@@ -359,7 +359,7 @@ void searchSubject(FILE * su)
     char line[50];
     char p[20];
     
-    //pede ao utilizador para inserir um parametro de busca (numero, primeiro ou ultimo nome)
+    //pede ao utilizador para inserir um parametro de busca (ano, semestre ou nome)
     printf("Enter search parameter: ");
     scanf("%s", &p);
     printf("\nResults found:\n");
